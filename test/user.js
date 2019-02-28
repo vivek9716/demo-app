@@ -30,17 +30,17 @@ describe('User', () => {
           dob: '25-07-1989',
           password:'vivek@1989',
           image:'https://scontent.fdel19-1.fna.fbcdn.net/v/t1.0-1/c0.0.160.160a/p160x160/44576904_10210470890963543_3245882333785489408_n.jpg?_nc_cat=109&_nc_ht=scontent.fdel19-1.fna&oh=68c851a4fa6f28fdfef0923cffc01a20&oe=5CDBCA5C',
-          isd_code:'+91'
+          isd_code:'+91',
+          gender: 'M'
         }
         chai.request(server)
-            .post('/api/user')
+            .post('/api/register')
             .send(user)
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
-              res.body.should.have.property('message').eql('You have register successfully.');
-              res.body.should.have.property('errors').eql(null);
-              res.body.should.have.property('statusCode').eql(100);
+              res.body.should.have.property('status').eql('success');
+              res.body.should.have.property('statusCode').eql(200);
               done();
             });
       });
@@ -48,18 +48,19 @@ describe('User', () => {
       it('it should not register a user without fullName, mobile_number, emailid, dob, password, image, isd_code, gender fields', (done) => {
             var user = {};
             chai.request(server)
-            .post('/user')
+            .post('/api/register')
             .send(user)
             .end((err, res) => {
+                  //console.log(res.body);
                   res.should.have.status(200);
                   res.body.should.be.a('object');
+                  res.body.should.have.property('statusCode').eql(400);
                   res.body.should.have.property('errors');
                   res.body.errors.should.have.property('fullName');
                   res.body.errors.should.have.property('mobile_number');
                   res.body.errors.should.have.property('emailid');
                   res.body.errors.should.have.property('dob');
-                  res.body.errors.should.have.property('password');
-                  res.body.errors.should.have.property('image');
+                  res.body.errors.should.have.property('password');                  
                   res.body.errors.should.have.property('isd_code');
                   res.body.errors.should.have.property('gender');
                   done();
