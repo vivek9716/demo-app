@@ -1,0 +1,28 @@
+{
+  "name": "shopping-api",
+  "version": "1.0.0",
+  "description": "This is a simple shopping api's demo",
+  "main": "index.js",
+  "scripts": {
+    "start": "PORT=4000 nodemon server.js",
+    "test": "mocha --timeout 10000"
+  },
+  "author": "Vivek Chaduhary",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.4",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "joi": "^14.3.1",
+    "loadash": "^1.0.0",
+    "mongoose": "^5.4.15",
+    "morgan": "^1.9.1",
+    "nodemailer": "^5.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10",
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "mocha": "^2.4.5"
+  }
+}
