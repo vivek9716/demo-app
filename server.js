@@ -1,11 +1,26 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const session = require('express-session');
+const passport = require('passport');
+
 const routes = require('./routes');
 const PORT = process.env.PORT || 3000;
 var app = express();
 app.use(bodyParser.json({limit: '1kb'}));
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(session({
+  secret: 'chaudhary',
+  cookie: {
+    maxAge: 60000
+  },
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 var mongoDB = 'mongodb://localhost:27017/amazon';
 mongoose.connect(mongoDB, { useNewUrlParser: true });

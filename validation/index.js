@@ -14,6 +14,12 @@ const registerSchema = Joi.object().keys({
     gender: Joi.string().valid(['M', 'F', 'MALE', 'FEMALE']).uppercase().required().label("Please enter a valid gender.")
 });
 
+const loginSchema = Joi.object().keys({
+    emailormobile: Joi.string().min(4).max(50).required().label("Please enter a valid emailid/mobile number."),
+    password: Joi.string().min(4).max(20).required().label("Please enter a valid password."),
+})
+
 module.exports = {
-  '/register': registerSchema
+  '/register': registerSchema,
+  '/login': loginSchema
 };

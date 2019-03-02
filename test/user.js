@@ -51,19 +51,18 @@ describe('User', () => {
             .post('/api/register')
             .send(user)
             .end((err, res) => {
-                  //console.log(res.body);
-                  res.should.have.status(200);
-                  res.body.should.be.a('object');
-                  res.body.should.have.property('statusCode').eql(400);
-                  res.body.should.have.property('errors');
-                  res.body.errors.should.have.property('fullName');
-                  res.body.errors.should.have.property('mobile_number');
-                  res.body.errors.should.have.property('emailid');
-                  res.body.errors.should.have.property('dob');
-                  res.body.errors.should.have.property('password');                  
-                  res.body.errors.should.have.property('isd_code');
-                  res.body.errors.should.have.property('gender');
-                  done();
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('statusCode').eql(400);
+              res.body.should.have.property('errors');
+              res.body.errors.should.have.property('fullName');
+              res.body.errors.should.have.property('mobile_number');
+              res.body.errors.should.have.property('emailid');
+              res.body.errors.should.have.property('dob');
+              res.body.errors.should.have.property('password');
+              res.body.errors.should.have.property('isd_code');
+              res.body.errors.should.have.property('gender');
+              done();
             });
       });
   });

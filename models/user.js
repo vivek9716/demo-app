@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
 const SALT_WORK_FACTOR = 10;
 const _ = require('lodash');
 
@@ -72,6 +73,10 @@ UserSchema.pre('save', function(next) {
     });
 });
 
+UserSchema.methods.validatePassword = function (password) {
+  return bcrypt.compareSync(password, this.password, SALT_WORK_FACTOR);
+}
+
 UserSchema.path('emailid').validate(async (value) => {
     const emailCount = await mongoose.models.user.countDocuments({emailid: value });
     return !emailCount;
@@ -95,6 +100,26 @@ UserSchema.post('save', function(error, doc, next) {
     next(error);
   }
 });
+
+UserSchema.methods.generateJWT = function() {
+  const today = new Date();
+  const expirationDate = new Date(today);
+  expirationDate.setDate(today.getDate() + 60);
+  return jwt.sign({
+    emailid: this.emailid,
+    id: this._id,
+    mobile_status: this.mobile_status,
+    email_status: this.email_status,
+    fullName: this.fullName,
+    mobile_number: this.mobile_number,
+    dob: this.dob,
+    isd_code: this.isd_code,
+    gender: this.gender,
+    created_at: this.created_at,
+    updated_at: this.updated_at,
+    exp: parseInt(expirationDate.getTime() / 1000, 10),
+  }, 'secret');
+}
 
 const userSchema = mongoose.model('user', UserSchema);
 module.exports = userSchema;

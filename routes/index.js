@@ -9,5 +9,6 @@ const userController = require('../controllers/UserController');
 const userCtrl = new userController(userModel);
 
 Router.post('/register', validateRequest, userCtrl.create);
+Router.route('/login').post(validateRequest, userCtrl.login);
 
 module.exports = Router;
