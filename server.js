@@ -22,7 +22,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-var mongoDB = 'mongodb://localhost:27017/amazon';
+//var mongoDB = 'mongodb://localhost:27017/amazon';
+var mongoDB = `mongodb+srv://vivek_chaudhary:XVcIfWSbswghoNMm@app-demo-awpco.gcp.mongodb.net/amazon?retryWrites=true`;
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.set('useCreateIndex', true);
 mongoose.Promise = global.Promise;

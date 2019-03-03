@@ -1,6 +1,8 @@
 const AppController = require('./AppController');
 const passport = require('passport');
 require('../middlewares/passportStrategy');
+const userModel = require('../models/user');
+const userAddressesModel = require('../models/userAddresses');
 
 class UserController extends AppController {
 
@@ -40,6 +42,21 @@ class UserController extends AppController {
           });
         }
       })(req, res, next);
+   }
+
+   saveAddress (req, res, next) {
+     const { payload: { id } } = req;
+     return userModel.findById(id, { password: 0 }).then((user) => {
+         if(!user) {
+           return res.sendStatus(400);
+         } else {
+           req.body.userId = id;
+           const userAddressesModel1 = new userAddressesModel(req.body);
+           userAddressesModel1.save();
+         }
+
+         return res.json('hello success');
+       });
    }
 
 }
